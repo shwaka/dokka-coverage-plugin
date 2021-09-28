@@ -15,13 +15,14 @@ internal class Type(path: Path) {
         rows.map { row: Element -> this.parseRow(row) }.flatten()
     }
 
-    fun parseIndexHtml() {
-        for (typeContent in this.typeContentList) {
-            println("${this.name}.${typeContent.name}, ${typeContent.hasDoc}")
-        }
+    fun showSummary(indent: Int) {
+        val spaces = " ".repeat(indent)
+        val countDocumented: Int = this.typeContentList.filter { it.hasDoc }.size
         val countTotal: Int = this.typeContentList.size
-        val countDocumented: Int = this.typeContentList.filter { it.hasDoc }.count()
-        println("${this.name}: $countDocumented/$countTotal")
+        println(spaces + "${this.name}: $countDocumented/$countTotal")
+        for (typeContent in this.typeContentList) {
+            println(spaces + "${this.name}.${typeContent.name}, ${typeContent.hasDoc}")
+        }
     }
 
     private fun parseRow(row: Element): List<TypeContent> {

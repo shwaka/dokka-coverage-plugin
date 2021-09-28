@@ -16,12 +16,15 @@ internal class Root(path: Path, projectName: String) {
             .map { Package(it) }
     }
 
-    fun parseIndexHtml() {
+    fun showSummary() {
         val doc: Document = this.indexHtml.parse()
         val rows: Elements = doc.select("div.table-row")
         val rootContentList = rows.map { row: Element -> this.parseRow(row) }
         for (rootContent in rootContentList) {
             println("${rootContent.pkgName}, ${rootContent.hasDoc}")
+        }
+        for (pkg in this.pkgList) {
+            pkg.showSummary(2)
         }
     }
 
@@ -30,13 +33,6 @@ internal class Root(path: Path, projectName: String) {
         val pkgName = anchor.text()
         val hasDoc = row.select("span.brief-comment").containsOneElement()
         return RootContent(pkgName, hasDoc)
-    }
-
-    fun checkPackages() {
-        for (pkg in this.pkgList) {
-            pkg.parseIndexHtml()
-            pkg.checkTypes()
-        }
     }
 
     private data class RootContent(val pkgName: String, val hasDoc: Boolean)

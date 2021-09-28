@@ -15,13 +15,22 @@ internal class Package(path: Path) {
         typePathList.filter { it.toFile().isDirectory }
             .map { Type(it) }
     }
-
-    fun parseIndexHtml() {
+    private val pkgContentList: List<PackageContent> by lazy {
         val doc: Document = this.indexHtml.parse()
         val rows: Elements = doc.select("div.table-row")
-        val pkgContentList = rows.map { row: Element -> this.parseRow(row) }.flatten()
-        for (pkgContent in pkgContentList) {
-            println("${this.name}.${pkgContent.name}, ${pkgContent.hasDoc}")
+        rows.map { row: Element -> this.parseRow(row) }.flatten()
+    }
+
+    fun showSummary(indent: Int) {
+        val spaces = " ".repeat(indent)
+        val countDocumented: Int = this.pkgContentList.filter { it.hasDoc }.size
+        val countTotal: Int = this.pkgContentList.size
+        println(spaces + "${this.name}: $countDocumented/$countTotal")
+        for (pkgContent in this.pkgContentList) {
+            println(spaces + "${this.name}.${pkgContent.name}, ${pkgContent.hasDoc}")
+        }
+        for (type in this.typeList) {
+            type.showSummary(indent + 2)
         }
     }
 
@@ -34,12 +43,6 @@ internal class Package(path: Path) {
     private fun parseContent(name: String, div: Element): PackageContent {
         val hasDoc = div.select("div.brief").containsOneElement()
         return PackageContent(name, hasDoc)
-    }
-
-    fun checkTypes() {
-        for (type in this.typeList) {
-            type.parseIndexHtml()
-        }
     }
 
     private data class PackageContent(val name: String, val hasDoc: Boolean)
