@@ -7,13 +7,10 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 class DokkaCoveragePlugin : Plugin<Project> {
-    private val dokkaHtmlDirectory: Path by lazy {
-        Paths.get(this.extension.dokkaHtmlDirectory.get())
-    }
-    private lateinit var extension: DokkaCoveragePluginExtension
-
     override fun apply(project: Project) {
-        this.extension = project.extensions.create<DokkaCoveragePluginExtension>("dokkaCoverage")
+        val extension: DokkaCoveragePluginExtension = project.extensions.create("dokkaCoverage")
+        val dokkaHtmlDirectory: Path = Paths.get(extension.dokkaHtmlDirectory.get())
+
         project.tasks.register("hello") {
             println("Hello from DokkaCoveragePlugin!")
         }
