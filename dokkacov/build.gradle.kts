@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test-junit"))
+    implementation("org.jsoup:jsoup:1.14.2")
 }
 
 tasks.test {
