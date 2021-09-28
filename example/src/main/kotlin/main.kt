@@ -24,3 +24,17 @@ fun function2(arg: Int): String {
 }
 
 fun noDocFunction1() {}
+
+/**
+ * Brief description of overload1(Int)
+ */
+fun overload1(arg: Int) {}
+
+/**
+ * Brief description of overload1(String)
+ */
+fun overload1(arg: String) {}
+
+fun noDocOverload1(arg: Int) {}
+
+fun noDocOverload1(arg: String) {}
