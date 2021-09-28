@@ -7,14 +7,14 @@ class Class1 {
     /**
      * Brief description of Class1.function1
      */
-    fun function1() {
-        return
-    }
+    fun function1() {}
+
+    fun noDocFunction1() {}
 }
 
 /**
  * Brief description of function2
  */
-fun function2() {
-    return
-}
+fun function2() {}
+
+fun noDocFunction2() {}

@@ -22,3 +22,5 @@ fun function1(): Int {
 fun function2(arg: Int): String {
     return ""
 }
+
+fun noDocFunction1() {}
