@@ -7,7 +7,6 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
-import java.io.File
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -29,8 +28,8 @@ class DokkaCoveragePlugin : Plugin<Project> {
     }
 
     private fun showCoverage() {
-        val indexHtml: File = this.dokkaHtmlDirectory.resolve("index.html").toFile()
-        val doc: Document = Jsoup.parse(indexHtml, "UTF-8")
+        val indexHtml: Path = this.dokkaHtmlDirectory.resolve("index.html")
+        val doc: Document = indexHtml.parse()
         val rows: Elements = doc.select("div.table-row")
         for (row: Element in rows) {
             for (a: Element in row.select("div.main-subrow a")) {
@@ -41,4 +40,8 @@ class DokkaCoveragePlugin : Plugin<Project> {
             }
         }
     }
+}
+
+private fun Path.parse(): Document {
+    return Jsoup.parse(this.toFile(), "UTF-8")
 }
