@@ -10,8 +10,15 @@ fun main() {
 }
 
 /**
- * A function that returns 1.
+ * Brief description of function1
  */
-fun foo(): Int {
+fun function1(): Int {
     return 1
+}
+
+/**
+ * Brief description of function2
+ */
+fun function2(arg: Int): String {
+    return ""
 }
