@@ -35,6 +35,7 @@ internal class Root(path: Path, projectName: String) {
     fun checkPackages() {
         for (pkg in this.pkgList) {
             pkg.parseIndexHtml()
+            pkg.checkTypes()
         }
     }
 

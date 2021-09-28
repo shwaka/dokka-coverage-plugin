@@ -3,10 +3,17 @@ package com.github.shwaka.dokkacov
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
+import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.streams.toList
 
 internal class Package(path: Path) {
     private val indexHtml: Path = path.resolve("index.html")
+    private val typeList: List<Type> = run {
+        val typePathList: List<Path> = Files.list(path).toList()
+        typePathList.filter { it.toFile().isDirectory }
+            .map { Type(it) }
+    }
 
     fun parseIndexHtml() {
         val doc: Document = this.indexHtml.parse()
@@ -26,6 +33,12 @@ internal class Package(path: Path) {
     private fun parseContent(name: String, div: Element): PackageContent {
         val hasDoc = div.select("div.brief").containsOneElement()
         return PackageContent(name, hasDoc)
+    }
+
+    fun checkTypes() {
+        for (type in this.typeList) {
+            type.parseIndexHtml()
+        }
     }
 
     private data class PackageContent(val name: String, val hasDoc: Boolean)
