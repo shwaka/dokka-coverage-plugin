@@ -1,10 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "1.3.72" // Version 1.3.72 is suggested by the plugin kotlin-dsl
     `kotlin-dsl`
     `java-gradle-plugin`
     `maven-publish`
+    id("org.jlleitschuh.gradle.ktlint") version "9.4.1" // 10.2.0 didn't work (since kotlin version is old?)
 }
 
 group = "com.github.shwaka.dokkacov"
@@ -34,3 +35,7 @@ gradlePlugin {
         }
     }
 }
+
+// Aliases for ktlint commands
+tasks.register("kc") { dependsOn("ktlintCheck") }
+tasks.register("kf") { dependsOn("ktlintFormat") }
