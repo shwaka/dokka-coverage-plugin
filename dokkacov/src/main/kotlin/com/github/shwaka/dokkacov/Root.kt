@@ -9,10 +9,10 @@ import kotlin.streams.toList
 
 internal class Root(path: Path, projectName: String) {
     private val indexHtml: Path = path.resolve("index.html")
-    private val packages: List<Package> = run {
+    private val pkgList: List<Package> = run {
         val projectDirectory: Path = path.resolve(projectName)
-        val packagePaths: List<Path> = Files.list(projectDirectory).toList()
-        packagePaths.filter { it.toFile().isDirectory }
+        val pkgPathList: List<Path> = Files.list(projectDirectory).toList()
+        pkgPathList.filter { it.toFile().isDirectory }
             .map { Package(it) }
     }
 
@@ -30,8 +30,8 @@ internal class Root(path: Path, projectName: String) {
     }
 
     fun checkPackages() {
-        for (pack in this.packages) {
-            pack.parseIndexHtml()
+        for (pkg in this.pkgList) {
+            pkg.parseIndexHtml()
         }
     }
 }
