@@ -24,7 +24,7 @@ internal class Root(path: Path, projectName: String) {
             println("${rootContent.pkgName}, ${rootContent.hasDoc}")
         }
         for (pkg in this.pkgList) {
-            pkg.showSummary(2)
+            pkg.showSummary(0)
         }
     }
 

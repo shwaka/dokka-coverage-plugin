@@ -16,10 +16,14 @@ internal class Type(path: Path) {
     }
 
     fun showSummary(indent: Int) {
-        val spaces = " ".repeat(indent)
-        val countDocumented: Int = this.typeContentList.filter { it.hasDoc }.size
-        val countTotal: Int = this.typeContentList.size
-        println(spaces + "${this.name}: $countDocumented/$countTotal")
+        run {
+            val spaces = " ".repeat(indent)
+            val countDocumented: Int = this.typeContentList.filter { it.hasDoc }.size
+            val countTotal: Int = this.typeContentList.size
+            println(spaces + "${this.name}: $countDocumented/$countTotal")
+        }
+        val additionalIndent = 2
+        val spaces = " ".repeat(indent + additionalIndent)
         for (typeContent in this.typeContentList) {
             println(spaces + "${this.name}.${typeContent.name}, ${typeContent.hasDoc}")
         }
