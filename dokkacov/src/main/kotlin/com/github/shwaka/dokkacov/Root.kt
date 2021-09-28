@@ -19,17 +19,17 @@ internal class Root(path: Path, projectName: String) {
     fun parseIndexHtml() {
         val doc: Document = this.indexHtml.parse()
         val rows: Elements = doc.select("div.table-row")
-        for (row: Element in rows) {
-            val rootRow = this.parseRow(row)
-            println("${rootRow.pkgName}, ${rootRow.hasDoc}")
+        val rootContentList = rows.map { row: Element -> this.parseRow(row) }
+        for (rootContent in rootContentList) {
+            println("${rootContent.pkgName}, ${rootContent.hasDoc}")
         }
     }
 
-    private fun parseRow(row: Element): RootRow {
+    private fun parseRow(row: Element): RootContent {
         val anchor = row.select("div.main-subrow a").getTheElement()
         val pkgName = anchor.text()
         val hasDoc = row.select("span.brief-comment").containsOneElement()
-        return RootRow(pkgName, hasDoc)
+        return RootContent(pkgName, hasDoc)
     }
 
     fun checkPackages() {
@@ -38,5 +38,5 @@ internal class Root(path: Path, projectName: String) {
         }
     }
 
-    private data class RootRow(val pkgName: String, val hasDoc: Boolean)
+    private data class RootContent(val pkgName: String, val hasDoc: Boolean)
 }

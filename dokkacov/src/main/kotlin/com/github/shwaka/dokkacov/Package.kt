@@ -11,18 +11,22 @@ internal class Package(path: Path) {
     fun parseIndexHtml() {
         val doc: Document = this.indexHtml.parse()
         val rows: Elements = doc.select("div.table-row")
-        for (row: Element in rows) {
-            val pkgRow = this.parseRow(row)
-            println("${pkgRow.name}, ${pkgRow.hasDoc}")
+        val pkgContentList = rows.map { row: Element -> this.parseRow(row) }.flatten()
+        for (pkgContent in pkgContentList) {
+            println("${pkgContent.name}, ${pkgContent.hasDoc}")
         }
     }
 
-    private fun parseRow(row: Element): PackageRow {
-        val anchor = row.select("div.main-subrow span.inline-flex a")
+    private fun parseRow(row: Element): List<PackageContent> {
+        val anchor = row.select("div.main-subrow span.inline-flex a").getTheElement()
         val name = anchor.text()
-        val hasDoc = row.select("div.brief").containsOneElement()
-        return PackageRow(name, hasDoc)
+        return row.select("div.divergent-group").toList().map { div -> this.parseContent(name, div) }
     }
 
-    private data class PackageRow(val name: String, val hasDoc: Boolean)
+    private fun parseContent(name: String, div: Element): PackageContent {
+        val hasDoc = div.select("div.brief").containsOneElement()
+        return PackageContent(name, hasDoc)
+    }
+
+    private data class PackageContent(val name: String, val hasDoc: Boolean)
 }
