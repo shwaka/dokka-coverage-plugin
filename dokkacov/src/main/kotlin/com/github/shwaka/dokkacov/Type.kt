@@ -9,14 +9,19 @@ internal class Type(path: Path) {
     private val indexHtml: Path = path.resolve("index.html")
     // private val name: String = doc.select("h1.cover span").getTheElement().text()
     private val name: String = path.fileName.toString().capitalizeHyphen()
-
-    fun parseIndexHtml() {
+    private val typeContentList: List<TypeContent> by lazy {
         val doc: Document = this.indexHtml.parse()
         val rows: Elements = doc.select("div.table-row")
-        val typeContentList = rows.map { row: Element -> this.parseRow(row) }.flatten()
-        for (typeContent in typeContentList) {
+        rows.map { row: Element -> this.parseRow(row) }.flatten()
+    }
+
+    fun parseIndexHtml() {
+        for (typeContent in this.typeContentList) {
             println("${this.name}.${typeContent.name}, ${typeContent.hasDoc}")
         }
+        val countTotal: Int = this.typeContentList.size
+        val countDocumented: Int = this.typeContentList.filter { it.hasDoc }.count()
+        println("${this.name}: $countDocumented/$countTotal")
     }
 
     private fun parseRow(row: Element): List<TypeContent> {
