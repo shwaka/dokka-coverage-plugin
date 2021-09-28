@@ -7,13 +7,15 @@ import java.nio.file.Path
 
 internal class Type(path: Path) {
     private val indexHtml: Path = path.resolve("index.html")
+    // private val name: String = doc.select("h1.cover span").getTheElement().text()
+    private val name: String = path.fileName.toString().capitalizeHyphen()
 
     fun parseIndexHtml() {
         val doc: Document = this.indexHtml.parse()
         val rows: Elements = doc.select("div.table-row")
         val typeContentList = rows.map { row: Element -> this.parseRow(row) }.flatten()
         for (typeContent in typeContentList) {
-            println("${typeContent.name}, ${typeContent.hasDoc}")
+            println("${this.name}.${typeContent.name}, ${typeContent.hasDoc}")
         }
     }
 

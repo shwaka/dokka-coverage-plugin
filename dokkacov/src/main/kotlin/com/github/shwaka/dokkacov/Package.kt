@@ -9,6 +9,7 @@ import kotlin.streams.toList
 
 internal class Package(path: Path) {
     private val indexHtml: Path = path.resolve("index.html")
+    private val name: String = path.fileName.toString()
     private val typeList: List<Type> = run {
         val typePathList: List<Path> = Files.list(path).toList()
         typePathList.filter { it.toFile().isDirectory }
@@ -20,7 +21,7 @@ internal class Package(path: Path) {
         val rows: Elements = doc.select("div.table-row")
         val pkgContentList = rows.map { row: Element -> this.parseRow(row) }.flatten()
         for (pkgContent in pkgContentList) {
-            println("${pkgContent.name}, ${pkgContent.hasDoc}")
+            println("${this.name}.${pkgContent.name}, ${pkgContent.hasDoc}")
         }
     }
 

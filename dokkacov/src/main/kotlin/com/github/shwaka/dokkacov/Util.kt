@@ -23,3 +23,9 @@ internal fun <T> Iterable<T>.containsOneElement(): Boolean {
     }
     return (count == 1)
 }
+
+internal fun String.capitalizeHyphen(): String {
+    // replace -foo-bar-baz with FooBarBaz
+    val re = """-[a-z]""".toRegex()
+    return this.replace(re) { it.value.substring(1..1).capitalize() }
+}
