@@ -18,6 +18,7 @@ class DokkaCoveragePlugin : Plugin<Project> {
         project.tasks.register("dokkacov") {
             val root = Root(dokkaHtmlDirectory, project.name)
             root.parseIndexHtml()
+            root.checkPackages()
         }
     }
 }
