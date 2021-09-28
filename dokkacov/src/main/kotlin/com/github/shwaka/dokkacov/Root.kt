@@ -28,12 +28,7 @@ internal class Root(path: Path, projectName: String) {
     private fun parseRow(row: Element): RootRow {
         val anchor = row.select("div.main-subrow a").getTheElement()
         val pkgName = anchor.text()
-        val hasDoc = row.select("span.brief-comment").let { spanList ->
-            if (spanList.count() > 1) {
-                throw Exception("A row contains multiple brief comments")
-            }
-            spanList.isNotEmpty()
-        }
+        val hasDoc = row.select("span.brief-comment").containsOneElement()
         return RootRow(pkgName, hasDoc)
     }
 

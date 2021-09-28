@@ -12,9 +12,17 @@ internal class Package(path: Path) {
         val doc: Document = this.indexHtml.parse()
         val rows: Elements = doc.select("div.table-row")
         for (row: Element in rows) {
-            for (span: Element in row.select("div.brief")) {
-                println("  " + span.text())
-            }
+            val pkgRow = this.parseRow(row)
+            println("${pkgRow.name}, ${pkgRow.hasDoc}")
         }
     }
+
+    private fun parseRow(row: Element): PackageRow {
+        val anchor = row.select("div.main-subrow span.inline-flex a")
+        val name = anchor.text()
+        val hasDoc = row.select("div.brief").containsOneElement()
+        return PackageRow(name, hasDoc)
+    }
+
+    private data class PackageRow(val name: String, val hasDoc: Boolean)
 }

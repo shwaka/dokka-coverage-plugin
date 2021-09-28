@@ -8,10 +8,18 @@ internal fun Path.parse(): Document {
     return Jsoup.parse(this.toFile(), "UTF-8")
 }
 
-fun <T> Iterable<T>.getTheElement(): T {
+internal fun <T> Iterable<T>.getTheElement(): T {
     val count = this.count()
     if (count != 1) {
-        throw Exception("$this must contain exactly one element, but contains ${this.count()}")
+        throw Exception("$this should contain exactly one element, but contains $count")
     }
     return this.first()
+}
+
+internal fun <T> Iterable<T>.containsOneElement(): Boolean {
+    val count = this.count()
+    if (count > 1) {
+        throw Exception("$this should contain at most one element, but contains $count")
+    }
+    return (count == 1)
 }
