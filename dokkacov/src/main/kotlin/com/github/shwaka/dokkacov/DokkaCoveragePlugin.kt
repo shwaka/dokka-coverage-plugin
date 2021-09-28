@@ -11,13 +11,11 @@ class DokkaCoveragePlugin : Plugin<Project> {
         val extension: DokkaCoveragePluginExtension = project.extensions.create("dokkaCoverage")
         val dokkaHtmlDirectory: Path = Paths.get(extension.dokkaHtmlDirectory.get())
 
-        project.tasks.register("hello") {
-            println("Hello from DokkaCoveragePlugin!")
-        }
-
-        project.tasks.register("dokkacov") {
-            val root = Root(dokkaHtmlDirectory, project.name)
-            root.showSummary()
+        project.task("dokkacov") {
+            doLast {
+                val root = Root(dokkaHtmlDirectory, project.name)
+                root.showSummary()
+            }
         }
     }
 }
