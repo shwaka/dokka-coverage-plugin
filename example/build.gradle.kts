@@ -4,6 +4,7 @@ plugins {
     kotlin("jvm") version "1.4.32"
     application
     id("com.github.shwaka.dokkacov") version "1.0-SNAPSHOT"
+    id("org.jetbrains.dokka") version "1.4.32"
 }
 
 group = "me.shun"
@@ -27,4 +28,12 @@ tasks.withType<KotlinCompile>() {
 
 application {
     mainClassName = "com.github.shwaka.dokkacov.example.MainKt"
+}
+
+tasks.dokkaHtml.configure {
+    dokkaSourceSets {
+        configureEach {
+            includes.from("packages.md")
+        }
+    }
 }
