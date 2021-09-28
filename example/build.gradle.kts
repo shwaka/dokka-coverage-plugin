@@ -37,3 +37,7 @@ tasks.dokkaHtml.configure {
         }
     }
 }
+
+configure<com.github.shwaka.dokkacov.DokkaCoveragePluginExtension> {
+    dokkaHtmlDirectory.set("build/dokka/html")
+}
