@@ -20,13 +20,21 @@ internal class Root(path: Path, projectName: String) {
         val doc: Document = this.indexHtml.parse()
         val rows: Elements = doc.select("div.table-row")
         for (row: Element in rows) {
-            for (a: Element in row.select("div.main-subrow a")) {
-                println(a.text())
-            }
-            for (span: Element in row.select("span.brief-comment")) {
-                println("  " + span.text())
-            }
+            val rootRow = this.parseRow(row)
+            println("${rootRow.pkgName}, ${rootRow.hasDoc}")
         }
+    }
+
+    private fun parseRow(row: Element): RootRow {
+        val anchor = row.select("div.main-subrow a").getTheElement()
+        val pkgName = anchor.text()
+        val hasDoc = row.select("span.brief-comment").let { spanList ->
+            if (spanList.count() > 1) {
+                throw Exception("A row contains multiple brief comments")
+            }
+            spanList.isNotEmpty()
+        }
+        return RootRow(pkgName, hasDoc)
     }
 
     fun checkPackages() {
@@ -34,4 +42,6 @@ internal class Root(path: Path, projectName: String) {
             pkg.parseIndexHtml()
         }
     }
+
+    private data class RootRow(val pkgName: String, val hasDoc: Boolean)
 }
