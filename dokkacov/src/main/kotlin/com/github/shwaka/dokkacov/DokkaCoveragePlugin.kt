@@ -11,13 +11,18 @@ class DokkaCoveragePlugin : Plugin<Project> {
         val extension: DokkaCoveragePluginExtension = project.extensions.create("dokkaCoverage")
         val dokkaHtmlDirectory: Path = Paths.get(extension.dokkaHtmlDirectory.get())
 
-        project.task("dokkacov") {
+        project.task("dokkacovReport") {
             doLast {
                 val root = Root(dokkaHtmlDirectory, project.name)
                 println("total: ${root.getCount()}")
                 root.showSummary()
-                println(root.toJson())
             }
+        }
+
+        project.task("dokkacovWriteJson") {
+            val root = Root(dokkaHtmlDirectory, project.name)
+            val json: String = root.toJson()
+            dokkaHtmlDirectory.resolve("coverage.json").toFile().writeText(json)
         }
     }
 }
