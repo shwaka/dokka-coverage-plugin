@@ -18,6 +18,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test-junit"))
     implementation("org.jsoup:jsoup:1.14.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
 }
 
 tasks.test {
