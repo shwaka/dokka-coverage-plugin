@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.github.shwaka.dokkacov"
-version = "1.0-SNAPSHOT"
+version = "0.1"
 
 repositories {
     mavenCentral()
@@ -41,3 +41,12 @@ gradlePlugin {
 // Aliases for ktlint commands
 tasks.register("kc") { dependsOn("ktlintCheck") }
 tasks.register("kf") { dependsOn("ktlintFormat") }
+
+publishing {
+    repositories {
+        maven {
+            url = uri("../../maven/repository")
+            name = "MyMaven"
+        }
+    }
+}
