@@ -20,9 +20,11 @@ class DokkaCoveragePlugin : Plugin<Project> {
         }
 
         project.task("dokkacovWriteJson") {
-            val root = Root(dokkaHtmlDirectory, project.name)
-            val json: String = root.toJson()
-            dokkaHtmlDirectory.resolve("coverage.json").toFile().writeText(json)
+            doLast {
+                val root = Root(dokkaHtmlDirectory, project.name)
+                val json: String = root.toJson()
+                dokkaHtmlDirectory.resolve("coverage.json").toFile().writeText(json)
+            }
         }
     }
 }
