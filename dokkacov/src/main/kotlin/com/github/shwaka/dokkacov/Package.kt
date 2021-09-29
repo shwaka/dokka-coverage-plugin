@@ -24,9 +24,7 @@ internal class Package(path: Path) {
     fun showSummary(indent: Int) {
         run {
             val spaces = " ".repeat(indent)
-            val countDocumented: Int = this.pkgContentList.filter { it.hasDoc }.size
-            val countTotal: Int = this.pkgContentList.size
-            println(spaces + "${this.name}: $countDocumented/$countTotal")
+            println(spaces + "${this.name}: ${this.pkgContentList.countContent()}")
         }
         val additionalIndent = 2
         val spaces = " ".repeat(indent + additionalIndent)
@@ -49,5 +47,5 @@ internal class Package(path: Path) {
         return PackageContent(name, hasDoc)
     }
 
-    private data class PackageContent(val name: String, val hasDoc: Boolean)
+    private data class PackageContent(val name: String, override val hasDoc: Boolean) : Content
 }

@@ -18,9 +18,7 @@ internal class Type(path: Path) {
     fun showSummary(indent: Int) {
         run {
             val spaces = " ".repeat(indent)
-            val countDocumented: Int = this.typeContentList.filter { it.hasDoc }.size
-            val countTotal: Int = this.typeContentList.size
-            println(spaces + "${this.name}: $countDocumented/$countTotal")
+            println(spaces + "${this.name}: ${this.typeContentList.countContent()}")
         }
         val additionalIndent = 2
         val spaces = " ".repeat(indent + additionalIndent)
@@ -40,5 +38,5 @@ internal class Type(path: Path) {
         return TypeContent(name, hasDoc)
     }
 
-    private data class TypeContent(val name: String, val hasDoc: Boolean)
+    private data class TypeContent(val name: String, override val hasDoc: Boolean) : Content
 }

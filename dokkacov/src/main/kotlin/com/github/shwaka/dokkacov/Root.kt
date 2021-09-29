@@ -35,5 +35,5 @@ internal class Root(path: Path, projectName: String) {
         return RootContent(pkgName, hasDoc)
     }
 
-    private data class RootContent(val pkgName: String, val hasDoc: Boolean)
+    private data class RootContent(val pkgName: String, override val hasDoc: Boolean) : Content
 }
