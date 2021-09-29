@@ -12,6 +12,7 @@ class DokkaCoveragePlugin : Plugin<Project> {
         val dokkaHtmlDirectory: Path = Paths.get(extension.dokkaHtmlDirectory.get())
 
         project.task("dokkacovReport") {
+            description = "Print coverage report to console"
             doLast {
                 val root = Root(dokkaHtmlDirectory, project.name)
                 println("total: ${root.getCount()}")
@@ -20,6 +21,7 @@ class DokkaCoveragePlugin : Plugin<Project> {
         }
 
         project.task("dokkacovWriteJson") {
+            description = "Compute coverage and write it to a json file"
             doLast {
                 val root = Root(dokkaHtmlDirectory, project.name)
                 val json: String = root.toJson()
