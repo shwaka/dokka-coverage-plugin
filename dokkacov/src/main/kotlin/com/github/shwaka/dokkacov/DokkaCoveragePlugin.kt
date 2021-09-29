@@ -1,6 +1,5 @@
 package com.github.shwaka.dokkacov
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.create
@@ -17,8 +16,7 @@ class DokkaCoveragePlugin : Plugin<Project> {
                 val root = Root(dokkaHtmlDirectory, project.name)
                 println("total: ${root.getCount()}")
                 root.showSummary()
-                val mapper = jacksonObjectMapper()
-                println(mapper.writeValueAsString(root.getCount()))
+                println(root.toJson())
             }
         }
     }

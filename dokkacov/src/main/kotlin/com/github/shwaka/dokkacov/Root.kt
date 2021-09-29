@@ -1,5 +1,6 @@
 package com.github.shwaka.dokkacov
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
@@ -32,6 +33,11 @@ internal class Root(path: Path, projectName: String) {
 
     fun getCount(): ContentCount {
         return this.rootContentList.countContent() + this.pkgList.map { it.getCount() }.sum()
+    }
+
+    fun toJson(): String {
+        val mapper = jacksonObjectMapper()
+        return mapper.writeValueAsString(this.getCount())
     }
 
     private fun parseRow(row: Element): RootContent {

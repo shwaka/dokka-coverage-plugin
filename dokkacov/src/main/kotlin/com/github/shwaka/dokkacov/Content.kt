@@ -5,6 +5,8 @@ internal interface Content {
 }
 
 data class ContentCount(val documented: Int, val total: Int) {
+    val percent: Int? = if (total == 0) null else (documented * 100) / total
+
     operator fun plus(other: ContentCount): ContentCount {
         return ContentCount(this.documented + other.documented, this.total + other.total)
     }
