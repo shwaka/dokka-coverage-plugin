@@ -36,6 +36,10 @@ internal class Package(path: Path) {
         }
     }
 
+    fun getCount(): ContentCount {
+        return this.pkgContentList.countContent() + this.typeList.map { it.getCount() }.sum()
+    }
+
     private fun parseRow(row: Element): List<PackageContent> {
         val anchor = row.select("div.main-subrow span.inline-flex a").getTheElement()
         val name = anchor.text()

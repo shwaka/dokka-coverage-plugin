@@ -14,6 +14,7 @@ class DokkaCoveragePlugin : Plugin<Project> {
         project.task("dokkacov") {
             doLast {
                 val root = Root(dokkaHtmlDirectory, project.name)
+                println("total: ${root.getCount()}")
                 root.showSummary()
             }
         }

@@ -27,6 +27,10 @@ internal class Type(path: Path) {
         }
     }
 
+    fun getCount(): ContentCount {
+        return this.typeContentList.countContent()
+    }
+
     private fun parseRow(row: Element): List<TypeContent> {
         val anchor = row.select("div.main-subrow span.inline-flex a").getTheElement()
         val name = anchor.text()

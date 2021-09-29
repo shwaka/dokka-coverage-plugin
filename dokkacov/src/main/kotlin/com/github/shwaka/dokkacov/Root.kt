@@ -15,17 +15,23 @@ internal class Root(path: Path, projectName: String) {
         pkgPathList.filter { it.toFile().isDirectory }
             .map { Package(it) }
     }
-
-    fun showSummary() {
+    private val rootContentList: List<RootContent> by lazy {
         val doc: Document = this.indexHtml.parse()
         val rows: Elements = doc.select("div.table-row")
-        val rootContentList = rows.map { row: Element -> this.parseRow(row) }
-        for (rootContent in rootContentList) {
+        rows.map { row: Element -> this.parseRow(row) }
+    }
+
+    fun showSummary() {
+        for (rootContent in this.rootContentList) {
             println("${rootContent.pkgName}, ${rootContent.hasDoc}")
         }
         for (pkg in this.pkgList) {
             pkg.showSummary(0)
         }
+    }
+
+    fun getCount(): ContentCount {
+        return this.rootContentList.countContent() + this.pkgList.map { it.getCount() }.sum()
     }
 
     private fun parseRow(row: Element): RootContent {
