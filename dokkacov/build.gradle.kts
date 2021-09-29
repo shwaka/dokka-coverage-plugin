@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.3.72" // Version 1.3.72 is suggested by the plugin kotlin-dsl
+    kotlin("plugin.serialization") version "1.3.72"
     `kotlin-dsl`
     `java-gradle-plugin`
     `maven-publish`
@@ -18,6 +19,8 @@ repositories {
 dependencies {
     testImplementation(kotlin("test-junit"))
     implementation("org.jsoup:jsoup:1.14.2")
+    // implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
 }
 
 tasks.test {

@@ -1,9 +1,12 @@
 package com.github.shwaka.dokkacov
 
+import kotlinx.serialization.Serializable
+
 internal interface Content {
     val hasDoc: Boolean
 }
 
+@Serializable
 data class ContentCount(val documented: Int, val total: Int) {
     operator fun plus(other: ContentCount): ContentCount {
         return ContentCount(this.documented + other.documented, this.total + other.total)
