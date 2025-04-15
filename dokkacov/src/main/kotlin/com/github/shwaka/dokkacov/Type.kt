@@ -11,7 +11,11 @@ internal class Type(path: Path) {
     private val name: String = path.fileName.toString().capitalizeHyphen()
     private val typeContentList: List<TypeContent> by lazy {
         val doc: Document = this.indexHtml.parse()
-        val rows: Elements = doc.select("div.table-row")
+        val tabbedContent: Element = doc.select("div.tabbedcontent").getTheElement() {
+            "Type.init:typeContentList in ${this.name}"
+        }
+        // Search rows from tabbedContent to exclude "Inheritors".
+        val rows: Elements = tabbedContent.select("div.table-row")
         rows.map { row: Element -> this.parseRow(row) }.flatten()
     }
 
