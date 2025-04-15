@@ -43,7 +43,7 @@ internal class Package(path: Path) {
     private fun parseRow(row: Element): List<PackageContent> {
         val anchor = row.select("div.main-subrow span.inline-flex a").getTheElement()
         val name = anchor.text()
-        return row.select("div.divergent-group").toList().map { div -> this.parseContent(name, div) }
+        return row.select("div.content").toList().map { div -> this.parseContent(name, div) }
     }
 
     private fun parseContent(name: String, div: Element): PackageContent {
