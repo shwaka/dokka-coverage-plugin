@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.72" // Version 1.3.72 is suggested by the plugin kotlin-dsl
+    kotlin("jvm") version "1.9.10"
     `kotlin-dsl`
     `java-gradle-plugin`
     `maven-publish`
@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.github.shwaka.dokkacov"
-version = "0.2-SNAPSHOT"
+version = "0.3-SNAPSHOT"
 
 repositories {
     mavenCentral()
