@@ -38,6 +38,12 @@ gradlePlugin {
     }
 }
 
+tasks.withType<ProcessResources> {
+    // https://discuss.gradle.org/t/gradle-7-x-and-duplicatesstrategy/41045
+    // DuplicatesStrategy.INHERIT did not work
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 // Aliases for ktlint commands
 tasks.register("kc") { dependsOn("ktlintCheck") }
 tasks.register("kf") { dependsOn("ktlintFormat") }

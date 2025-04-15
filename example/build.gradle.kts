@@ -27,7 +27,7 @@ tasks.withType<KotlinCompile>() {
 }
 
 application {
-    mainClassName = "com.github.shwaka.dokkacov.example.MainKt"
+    mainClass.set("com.github.shwaka.dokkacov.example.MainKt")
 }
 
 tasks.dokkaHtml.configure {
