@@ -43,12 +43,21 @@ internal class Package(path: Path) {
     private fun parseRow(row: Element): List<PackageContent> {
         val anchor = row.select("div.main-subrow span.inline-flex a").getTheElement()
         val name = anchor.text()
-        return row.select("div.content").toList().map { div -> this.parseContent(name, div) }
+        val contentDiv = row.select("div.content").getTheElement()
+        // return row.select("div.content").toList().map { div -> this.parseContent(name, div) }
+        return this.parseContentDiv(name, contentDiv)
     }
 
-    private fun parseContent(name: String, div: Element): PackageContent {
-        val hasDoc = div.select("div.brief").containsOneElement()
-        return PackageContent(name, hasDoc)
+    // private fun parseContent(name: String, div: Element): PackageContent {
+    //     val hasDoc = div.select("div.brief").containsOneElement()
+    //     return PackageContent(name, hasDoc)
+    // }
+
+    private fun parseContentDiv(name: String, div: Element): List<PackageContent> {
+        val symbolCount = div.select("div.symbol").size
+        val briefCount = div.select("div.brief").size
+        val hasDocList = List(briefCount) { true } + List(symbolCount - briefCount) { false }
+        return hasDocList.map { PackageContent(name, it) }
     }
 
     private data class PackageContent(val name: String, override val hasDoc: Boolean) : Content
