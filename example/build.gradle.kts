@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.9.10"
     application
-    id("com.github.shwaka.dokkacov") version "0.4-SNAPSHOT"
+    id("com.github.shwaka.dokkacov") version "0.5-SNAPSHOT"
     id("org.jetbrains.dokka") version "1.9.10"
 }
 

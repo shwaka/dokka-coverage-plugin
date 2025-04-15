@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.github.shwaka.dokkacov"
-version = "0.4-SNAPSHOT"
+version = "0.5-SNAPSHOT"
 
 repositories {
     mavenCentral()
