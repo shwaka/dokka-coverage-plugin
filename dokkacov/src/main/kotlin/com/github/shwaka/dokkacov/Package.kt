@@ -45,11 +45,13 @@ internal class Package(path: Path) {
             "Package.parseRow:anchor in ${this.name} for the row:\n" + row.toString()
         }
         val name = anchor.text()
-        val contentDiv = row.select("div.content").getTheElement() {
-            "Package.parseRow:contentDiv in ${this.name} for the row:\n" + row.toString()
-        }
+        // Multiple "div.content"s can be contained if expect/actual is used in multiplatform project.
+        // val contentDiv = row.select("div.content").getTheElement() {
+        //     "Package.parseRow:contentDiv in ${this.name} for the row:\n" + row.toString()
+        // }
+        val contentDivList = row.select("div.content").toList()
         // return row.select("div.content").toList().map { div -> this.parseContent(name, div) }
-        return this.parseContentDiv(name, contentDiv)
+        return contentDivList.flatMap { this.parseContentDiv(name, it) }
     }
 
     // private fun parseContent(name: String, div: Element): PackageContent {
