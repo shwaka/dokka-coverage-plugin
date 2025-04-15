@@ -8,10 +8,10 @@ internal fun Path.parse(): Document {
     return Jsoup.parse(this.toFile(), "UTF-8")
 }
 
-internal fun <T> Iterable<T>.getTheElement(calledFrom: String): T {
+internal fun <T> Iterable<T>.getTheElement(getMessage: () -> String): T {
     val count = this.count()
     if (count != 1) {
-        throw Exception("The iterable <$this> should contain exactly one element, but contains $count. (getTheElement in $calledFrom)")
+        throw Exception("The iterable <$this> should contain exactly one element, but contains $count. \n" + getMessage())
     }
     return this.first()
 }

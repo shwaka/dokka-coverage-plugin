@@ -41,9 +41,13 @@ internal class Package(path: Path) {
     }
 
     private fun parseRow(row: Element): List<PackageContent> {
-        val anchor = row.select("div.main-subrow span.inline-flex a").getTheElement("Package.parseRow:anchor")
+        val anchor = row.select("div.main-subrow span.inline-flex a").getTheElement() {
+            "Package.parseRow:anchor for the row:\n" + row.toString()
+        }
         val name = anchor.text()
-        val contentDiv = row.select("div.content").getTheElement("Package.parserRow:contentDiv")
+        val contentDiv = row.select("div.content").getTheElement() {
+            "Package.parserRow:contentDiv for the row:\n" + row.toString()
+        }
         // return row.select("div.content").toList().map { div -> this.parseContent(name, div) }
         return this.parseContentDiv(name, contentDiv)
     }

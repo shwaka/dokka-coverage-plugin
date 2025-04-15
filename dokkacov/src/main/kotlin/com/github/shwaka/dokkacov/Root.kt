@@ -41,7 +41,9 @@ internal class Root(path: Path, projectName: String) {
     }
 
     private fun parseRow(row: Element): RootContent {
-        val anchor = row.select("div.main-subrow a").getTheElement("Root.parseRow")
+        val anchor = row.select("div.main-subrow a").getTheElement() {
+            "Root.parseRow for the row:\n" + row.toString()
+        }
         val pkgName = anchor.text()
         val hasDoc = row.select("span.brief-comment").containsOneElement()
         return RootContent(pkgName, hasDoc)

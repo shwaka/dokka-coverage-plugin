@@ -32,7 +32,9 @@ internal class Type(path: Path) {
     }
 
     private fun parseRow(row: Element): List<TypeContent> {
-        val anchor = row.select("div.main-subrow span.inline-flex a").getTheElement("Type.parseRow")
+        val anchor = row.select("div.main-subrow span.inline-flex a").getTheElement() {
+            "Type.parseRow for the row:\n" + row.toString()
+        }
         val name = anchor.text()
         return row.select("div.divergent-group").toList().map { div -> this.parseContent(name, div) }
     }
